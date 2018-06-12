@@ -1,5 +1,6 @@
-int led1 = 13;
+int led1 = 13; 
 int led2 = 8;
+int sby = 2;
 int serialData = 0;
 
 char senha2[] = "eae men kk";
@@ -9,6 +10,7 @@ void setup()
   Serial.begin(9600);
   pinMode(led1, OUTPUT);
   pinMode(led2, OUTPUT);
+  pinMode(sby, OUTPUT);
 }
 
 void loop()
@@ -21,11 +23,11 @@ void serialRead()
 {
   while(Serial.available())
   {
-   delay(10);
+   delay(100);
     if(Serial.available()>0)
     {
       char c = Serial.read();
-      readString+=c; 
+      readString+=c;
     } 
    }
        Serial.println(readString);
@@ -34,14 +36,19 @@ void auth()
 {
   if(readString == senha2)
   {
+    readString = "";
     digitalWrite(led1, HIGH);
     digitalWrite(led2, LOW);
+    delay(5000);
   }
   else
   {
+    Serial.println("Wrong pw");
+    readString = "";
     digitalWrite(led2, HIGH);
-    digitalWrite(led1, LOW);
-   }    
-   delay(1000);
-   readString = "";
+    delay(2000);
+  }      
+  
 }
+
+
